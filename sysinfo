@@ -1,0 +1,66 @@
+#!/bin/bash
+
+#sysinfo page - un script  pour produit un fichier html
+
+title="Système d'Information"
+time_system=$(date +"%x %r %Z")
+right_now="Mise à jour le $time_system par $USER" 
+
+
+
+
+#### Fonctions
+
+system_info()
+{	
+	echo "<h1>System Info</h1>"
+	echo -e "Système d'information $(lsb_release -a)\n";
+
+}
+
+
+show_uptime()
+{
+	echo "<h1>Show Uptime</h1>"
+ echo -e "la date actuelle $(uptime) \n"
+}
+
+drive_space()
+{
+	echo "<h1>Drive Space</h1>"
+ echo -e "info disque $(df) \n"
+}
+
+home_space()
+{
+	echo "<h1>Home Space</h1>"
+	echo -e "le repertoir courant $(du -s /home/* | sort -nr) \n"
+}
+
+cat << _EOF_
+
+
+<html>
+ <html>
+<head>
+ <title> $title </title>
+<head>
+ <body>
+<h1>
+my hostename is: $HOSTNAME
+</h1>
+<p>le contenu de la page $title</p>
+<p>$right_now</p>
+
+<pre>$(system_info)</pre><br>
+
+<pre>$(show_uptime)</pre><br>
+
+<pre>$(drive_space)</pre><br>
+
+<pre>$(home_space)</pre><br>
+
+</body>
+</html>
+
+_EOF_
